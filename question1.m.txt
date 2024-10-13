@@ -1,0 +1,50 @@
+% Load the image
+img = imread('image1.jpg');
+
+% Convert the image to grayscale if it's an RGB image
+gray_img = rgb2gray(img);
+
+% Calculate an optimal threshold using Otsu's method
+threshold = graythresh(gray_img);
+
+% Convert the grayscale image to binary using the threshold
+binary_mask = imbinarize(gray_img, threshold);
+
+% Apply a Gaussian filter with standard deviation of 2
+gaussian_filtered = imgaussfilt(gray_img, 2);
+
+% Create an average filter (3x3 kernel) and apply it
+avg_filter = fspecial('average', [3 3]);
+average_filtered = imfilter(gray_img, avg_filter);
+
+% Apply Laplacian filter
+laplacian_filter = fspecial('laplacian');
+laplacian_filtered = imfilter(gray_img, laplacian_filter);
+
+% Apply Prewitt filter
+prewitt_filter = fspecial('prewitt');
+prewitt_filtered = imfilter(gray_img, prewitt_filter);
+
+% Display all the results in a single figure with multiple subplots
+figure;
+
+% Display the original grayscale image and binary mask
+subplot(3, 3, 1); imshow(gray_img); title('Grayscale Image');
+subplot(3, 3, 2); imshow(binary_mask); title('Binary Mask');
+
+% Display Gaussian and Average filtered images
+subplot(3, 3, 3); imshow(gaussian_filtered); title('Gaussian Filtered');
+subplot(3, 3, 4); imshow(average_filtered); title('Average Filtered');
+
+% Display Laplacian and Prewitt filtered images
+subplot(3, 3, 5); imshow(laplacian_filtered); title('Laplacian Filtered');
+subplot(3, 3, 6); imshow(prewitt_filtered); title('Prewitt Filtered');
+
+% Redisplay original grayscale image for comparison
+subplot(3, 3, 7); imshow(gray_img); title('Original Grayscale (For Reference)');
+
+% Redisplay Binary Mask
+subplot(3, 3, 8); imshow(binary_mask); title('Binary Mask (For Reference)');
+
+% Add another Gaussian for comparison
+subplot(3, 3, 9); imshow(gaussian_filtered); title('Gaussian (For Reference)');

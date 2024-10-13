@@ -1,0 +1,17 @@
+% Step 1: Load the image and convert to grayscale
+img = imread('image1.jpg');
+gray_img = rgb2gray(img);  % Convert to grayscale if needed
+
+% Step 2: Normalize the image to range [0, 1]
+normalized_img = double(gray_img) / 255;
+
+% Step 3: Perform quantization directly without resizing
+% Divide the image by the number of levels, and multiply back to scale
+levels = 32;  % Number of grayscale levels
+quantized_img = floor(normalized_img * levels) / levels;  % Quantization
+quantized_img = uint8(quantized_img * 255);  % Convert back to uint8
+
+% Step 4: Display the original and quantized images
+figure;
+subplot(1, 2, 1); imshow(gray_img); title('Original Grayscale Image');
+subplot(1, 2, 2); imshow(quantized_img); title('Quantized Image (32 Levels)');
